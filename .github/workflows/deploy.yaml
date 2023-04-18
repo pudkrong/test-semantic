@@ -33,7 +33,11 @@ jobs:
 
       - name: Get tag name
         run: |
-          CURRENT_TAG=`echo ${{ github.ref }} | sed 's/refs\/tags\///'`
+          if [[ "${{ github.ref }}" =~ "^refs\/tags\/" ]]; then
+            CURRENT_TAG=`echo ${{ github.ref }} | sed 's/refs\/tags\///'`
+          else
+            CURRENT_TAG=`git describe --tags --abbrev=0`
+          fi
           echo "Deploy version ${CURRENT_TAG}"
           echo "RELEASE_IMAGE_TAG=${CURRENT_TAG}" >> $GITHUB_ENV
 
