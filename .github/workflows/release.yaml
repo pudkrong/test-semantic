@@ -67,6 +67,6 @@ jobs:
               workflow_id: 'deploy.yaml',
               ref: context.ref,
               inputs: {
-                tag: "${{ env.CURRENT_TAG }}"
+                tag: '${{ env.CURRENT_TAG }}'
               }
             })
