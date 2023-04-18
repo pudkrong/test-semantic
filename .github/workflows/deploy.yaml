@@ -1,6 +1,8 @@
 name: Deployment
 
 on:
+  workflow_dispatch:
+
   create:
     tags:
       - "*"
@@ -34,3 +36,4 @@ jobs:
           CURRENT_TAG=`echo ${{ github.ref }} | sed 's/refs\/tags\///'`
           echo "Deploy version ${CURRENT_TAG}"
           echo "RELEASE_IMAGE_TAG=${CURRENT_TAG}" >> $GITHUB_ENV
+
