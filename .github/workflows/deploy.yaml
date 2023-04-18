@@ -36,7 +36,7 @@ jobs:
           if [[ "${{ github.ref }}" =~ "^refs\/tags\/" ]]; then
             CURRENT_TAG=`echo ${{ github.ref }} | sed 's/refs\/tags\///'`
           else
-            CURRENT_TAG=`git describe --tags --abbrev=0`
+            CURRENT_TAG=${{ github.event.inputs.currentTag }}
           fi
           echo "Deploy version ${CURRENT_TAG}"
           echo "RELEASE_IMAGE_TAG=${CURRENT_TAG}" >> $GITHUB_ENV
