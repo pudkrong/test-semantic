@@ -38,26 +38,29 @@ jobs:
         run: npm ci --no-audit
 
       - name: Semantic release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npx semantic-release
 
-      - name: View context attributes
-        uses: actions/github-script@v6
-        with:
-          script: |
-            console.log(context)
-            console.log(context.repo)
+      - name: Get current tag
+        run: |
+          CURRENT_TAG=`git describe --tags --abbrev=0`
+          echo "CURRENT TAG > ${CURRENT_TAG}"
+
+      # - name: View context attributes
+      #   uses: actions/github-script@v6
+      #   with:
+      #     script: |
+      #       console.log(context)
+      #       console.log(context.repo)
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Trigger workflow
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'deploy.yaml',
-              ref: context.ref,
-            })
+      # - name: Trigger workflow
+      #   uses: actions/github-script@v6
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     script: |
+      #       github.rest.actions.createWorkflowDispatch({
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         workflow_id: 'deploy.yaml',
+      #         ref: context.ref,
+      #       })
