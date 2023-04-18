@@ -40,9 +40,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npx semantic-release
 
+      - name: View context attributes
+        uses: actions/github-script@v6
+        with:
+          script: console.log(context)
+
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Trigger workflow
         uses: actions/github-script@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           script: |
             github.rest.actions.createWorkflowDispatch({
