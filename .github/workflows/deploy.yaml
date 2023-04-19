@@ -5,11 +5,8 @@ on:
     inputs:
       tag:
         description: 'TAG you want to deploy'
-        required: false
-
-  create:
-    tags:
-      - "*"
+        default: "latest"
+        required: true
 
 permissions:
   id-token: write
@@ -35,13 +32,16 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit
 
-      - name: Get tag name
+      - name: Echo
         run: |
-          if [[ "${{ github.ref }}" =~ "^refs\/tags\/" ]]; then
-            CURRENT_TAG=`echo ${{ github.ref }} | sed 's/refs\/tags\///'`
-          else
-            CURRENT_TAG=${{ github.event.inputs.tag }}
-          fi
-          echo "Deploy version ${CURRENT_TAG}"
-          echo "RELEASE_IMAGE_TAG=${CURRENT_TAG}" >> $GITHUB_ENV
+          echo "TAG ${{ github.event.inputs.tag }}"
+      # - name: Get tag name
+      #   run: |
+      #     if [[ "${{ github.ref }}" =~ "^refs\/tags\/" ]]; then
+      #       CURRENT_TAG=`echo ${{ github.ref }} | sed 's/refs\/tags\///'`
+      #     else
+      #       CURRENT_TAG=${{ github.event.inputs.tag }}
+      #     fi
+      #     echo "Deploy version ${CURRENT_TAG}"
+      #     echo "RELEASE_IMAGE_TAG=${CURRENT_TAG}" >> $GITHUB_ENV
 
