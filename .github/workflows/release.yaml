@@ -8,14 +8,13 @@ permissions:
   id-token: write
   contents: write
   issues: write
+  actions: write
 
 env:
   FORCE_COLOR: 3
 
 jobs:
   release:
-    # permissions: write-all
-
     runs-on: ubuntu-22.04
 
     if: github.ref == 'refs/heads/saga'
