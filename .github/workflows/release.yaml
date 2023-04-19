@@ -8,7 +8,6 @@ permissions:
   id-token: write
   contents: write
   issues: write
-  actions: write
 
 env:
   FORCE_COLOR: 3
@@ -57,13 +56,8 @@ jobs:
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Trigger workflow
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'deploy.yaml',
-              ref: context.ref,
-            })
+        permissions:
+          action: write
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy.yaml
