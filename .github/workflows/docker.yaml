@@ -27,4 +27,6 @@ jobs:
           node-version: "18.x"
 
       - name: docker build
-        run: docker buildx build --platform linux/amd64 --build-arg MOSQUITTO_VERSION=2.0.15 -t pud-test-1:latest dockers
+        run: |
+          docker buildx build --platform linux/amd64 --build-arg MOSQUITTO_VERSION=2.0.15 -t pud-test-1:latest dockers
+          docker images
