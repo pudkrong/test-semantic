@@ -1,0 +1,30 @@
+name: Docker
+
+on:
+  push:
+    branches:
+      - gh-action
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: write
+  issues: write
+  # actions: write
+
+env:
+  FORCE_COLOR: 3
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "18.x"
+
+      - name: docker build
+        run: docker build --platform linux/amd64 --build-arg MOSQUITTO_VERSION=2.0.15 -t pud-test-1:latest dockers
